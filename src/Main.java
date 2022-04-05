@@ -24,7 +24,13 @@ public class Main {
 
     /** Check the OS. */
     static void manageOS () {
-        os = System.getProperty("os.name");
+
+        try {
+            os = System.getProperty("os.name");
+        } catch (Exception e) {
+            System.out.println("[ModpackInstaller] Cannot get the OS.\nThe program might be missing permissions to environment variables.");
+        }
+
         System.out.println("[ModpackInstaller] OS: " + os);
         if (!os.contains("Windows")) {
             System.out.printf("[ModpackInstaller] Your operating system, %s, is not supported.\n", os);
@@ -32,6 +38,8 @@ public class Main {
             Scanner wait = new Scanner(System.in);
             wait.nextLine();
             System.exit(0);
+        } else {
+            System.out.println("[ModpackInstaller] OS is supported: " + os);
         }
     }
 
@@ -91,6 +99,19 @@ public class Main {
             System.exit(0);
         } else {
             System.out.println("[ModpackInstaller] Version check: Latest!");
+        }
+
+    }
+
+    static void install () {
+
+        String localappdata;
+
+        try {
+            localappdata = System.getenv("LOCALAPPDATA");
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            System.out.println("[ModpackInstaller] Cannot get the LOCALAPPDATA environment variable.\nThe program might be missing permissions to environment variables.");
         }
 
     }
